@@ -4,7 +4,6 @@ using System.Text;
 
 namespace ZeusFiscalMonitor.Domain.ValueObjects
 {
-    public abstract record ValueObject;
     public record UUID : ValueObject
     {
         public Guid Value { get; init; }
