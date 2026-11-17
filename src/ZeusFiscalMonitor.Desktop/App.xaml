@@ -1,9 +1,43 @@
 ﻿<Application x:Class="ZeusFiscalMonitor.Desktop.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:ZeusFiscalMonitor.Desktop"
-             StartupUri="MainWindow.xaml">
+             xmlns:conv="clr-namespace:ZeusFiscalMonitor.Desktop.Converters"
+             ShutdownMode="OnMainWindowClose">
+    <!-- Sem StartupUri: a janela é criada pelo container de DI em App.xaml.cs -->
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <BooleanToVisibilityConverter x:Key="BoolToVisibility" />
+            <conv:NullToVisibilityConverter x:Key="NullToVisibility" />
+
+            <!-- Cor do resultado: verde (true), vermelho (false), neutro (null). -->
+            <Style x:Key="ResultadoStyle" TargetType="Border">
+                <Setter Property="Padding" Value="12" />
+                <Setter Property="CornerRadius" Value="4" />
+                <Setter Property="BorderThickness" Value="1" />
+                <Setter Property="Background" Value="#F5F5F5" />
+                <Setter Property="BorderBrush" Value="#DDDDDD" />
+                <Style.Triggers>
+                    <DataTrigger Binding="{Binding Sucesso}" Value="True">
+                        <Setter Property="Background" Value="#E8F5E9" />
+                        <Setter Property="BorderBrush" Value="#66BB6A" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Sucesso}" Value="False">
+                        <Setter Property="Background" Value="#FFEBEE" />
+                        <Setter Property="BorderBrush" Value="#EF5350" />
+                    </DataTrigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="Rotulo" TargetType="TextBlock">
+                <Setter Property="Margin" Value="0,0,0,4" />
+                <Setter Property="FontWeight" Value="SemiBold" />
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

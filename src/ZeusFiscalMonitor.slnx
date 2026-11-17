@@ -1,2 +1,11 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="../docker-compose.yml" />
+    <File Path="../global.json" />
+    <File Path="../README.md" />
+  </Folder>
+  <Project Path="ZeusFiscalMonitor.Desktop/ZeusFiscalMonitor.Desktop.csproj" />
+  <Project Path="ZeusFiscalMonitor.Domain/ZeusFiscalMonitor.Domain.csproj" />
+  <Project Path="ZeusFiscalMonitor.Infraestrutura/ZeusFiscalMonitor.Infraestrutura.csproj" />
+  <Project Path="ZeusFiscalMonitor.Testes/ZeusFiscalMonitor.Testes.csproj" />
 </Solution>

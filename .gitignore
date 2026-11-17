@@ -69,3 +69,6 @@ appsettings.Local.json
 # Visual Studio
 .vs/
 *.user
+src/.vs/ZeusFiscalMonitor/CopilotIndices/18.11.1093.4562/SemanticSymbols.db-wal
+src/.vs/ZeusFiscalMonitor.slnx/DesignTimeBuild/.dtbcache.v2
+src/.vs/ZeusFiscalMonitor.slnx/v18/.suo

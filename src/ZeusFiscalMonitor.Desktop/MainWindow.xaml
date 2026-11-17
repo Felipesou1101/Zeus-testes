@@ -1,12 +1,180 @@
-﻿<Window x:Class="ZeusFiscalMonitor.Desktop.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ZeusFiscalMonitor.Desktop"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+﻿<mah:MetroWindow x:Class="ZeusFiscalMonitor.Desktop.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 xmlns:vm="clr-namespace:ZeusFiscalMonitor.Desktop.ViewModels"
+                 xmlns:bh="clr-namespace:ZeusFiscalMonitor.Desktop.Behaviors"
+                 mc:Ignorable="d"
+                 d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+                 Title="Zeus Fiscal Monitor"
+                 Height="720" Width="1100" MinHeight="560" MinWidth="860"
+                 WindowStartupLocation="CenterScreen"
+                 GlowBrush="{DynamicResource MahApps.Brushes.Accent}">
 
-    </Grid>
-</Window>
+    <TabControl Margin="8" mah:TabControlHelper.Underlined="SelectedTabItem">
+
+        <!-- ===================== ABA 1: CONSULTA SEFAZ ===================== -->
+        <TabItem Header="Consulta SEFAZ" DataContext="{Binding ConsultaSefaz}">
+            <StackPanel Margin="16" MaxWidth="640" HorizontalAlignment="Left">
+                <TextBlock Text="Status do serviço NF-e (NfeStatusServico4 · Homologação)" FontSize="18" Margin="0,0,0,16" />
+
+                <TextBlock Text="UF" Style="{StaticResource Rotulo}" />
+                <StackPanel Orientation="Horizontal">
+                    <ComboBox Width="120" ItemsSource="{Binding Ufs}" SelectedItem="{Binding UfSelecionada}" />
+                    <Button Content="CONSULTAR" Margin="12,0,0,0" Padding="16,6"
+                            Style="{DynamicResource MahApps.Styles.Button.Square.Accent}"
+                            Command="{Binding ConsultarCommand}" />
+                    <Button Content="CANCELAR" Margin="8,0,0,0" Padding="16,6"
+                            Style="{DynamicResource MahApps.Styles.Button.Square}"
+                            Command="{Binding ConsultarCancelCommand}"
+                            Visibility="{Binding Carregando, Converter={StaticResource BoolToVisibility}}" />
+                    <mah:ProgressRing Width="32" Height="32" Margin="16,0,0,0" IsActive="{Binding Carregando}" />
+                </StackPanel>
+
+                <Border Style="{StaticResource ResultadoStyle}" Margin="0,24,0,0"
+                        Visibility="{Binding Detalhes, Converter={StaticResource NullToVisibility}}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="cStat: " FontWeight="SemiBold" FontSize="16" />
+                            <TextBlock Text="{Binding CStat, TargetNullValue='—'}" FontSize="16" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                            <TextBlock Text="xMotivo: " FontWeight="SemiBold" FontSize="16" />
+                            <TextBlock Text="{Binding XMotivo, TargetNullValue='—'}" FontSize="16" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <TextBlock Text="{Binding Erro}" Foreground="#C62828" TextWrapping="Wrap" Margin="0,8,0,0"
+                                   Visibility="{Binding Erro, Converter={StaticResource NullToVisibility}}" />
+                        <TextBlock Text="{Binding Detalhes}" Foreground="Gray" Margin="0,8,0,0" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </TabItem>
+
+        <!-- ===================== ABA 2: VALIDADOR & ASSINADOR ===================== -->
+        <TabItem Header="Validador &amp; Assinador" DataContext="{Binding Validador}">
+            <Grid Margin="16">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*" />
+                    <ColumnDefinition Width="16" />
+                    <ColumnDefinition Width="2*" />
+                </Grid.ColumnDefinitions>
+
+                <!-- Entrada -->
+                <DockPanel Grid.Column="0">
+                    <StackPanel DockPanel.Dock="Top">
+                        <TextBlock Text="Documento" Style="{StaticResource Rotulo}" />
+                        <DockPanel>
+                            <ComboBox DockPanel.Dock="Left" Width="100" ItemsSource="{Binding TiposDocumento}" SelectedItem="{Binding TipoSelecionado}" />
+                            <Button DockPanel.Dock="Right" Content="ABRIR XML..." Margin="8,0,0,0" Command="{Binding SelecionarXmlCommand}" />
+                            <TextBox Margin="8,0,0,0" IsReadOnly="True" Text="{Binding CaminhoXml}"
+                                     mah:TextBoxHelper.Watermark="Abra um arquivo ou cole o XML abaixo" />
+                        </DockPanel>
+
+                        <TextBlock Text="Certificado A1 (.pfx)" Style="{StaticResource Rotulo}" Margin="0,12,0,4" />
+                        <DockPanel>
+                            <Button DockPanel.Dock="Right" Content="GERAR TESTE" Margin="8,0,0,0" Command="{Binding GerarCertificadoTesteCommand}"
+                                    ToolTip="Gera um .pfx autoassinado (somente para demonstração)" />
+                            <Button DockPanel.Dock="Right" Content="..." Margin="8,0,0,0" Width="36" Command="{Binding SelecionarCertificadoCommand}" />
+                            <PasswordBox DockPanel.Dock="Right" Width="140" Margin="8,0,0,0"
+                                         bh:PasswordBoxAssistente.Senha="{Binding SenhaCertificado}"
+                                         mah:TextBoxHelper.Watermark="Senha" />
+                            <TextBox Text="{Binding CaminhoCertificado, UpdateSourceTrigger=PropertyChanged}"
+                                     mah:TextBoxHelper.Watermark="Caminho do certificado" />
+                        </DockPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,12,0,12">
+                            <Button Content="VALIDAR XSD" Padding="16,6" Command="{Binding ValidarCommand}"
+                                    Style="{DynamicResource MahApps.Styles.Button.Square}" />
+                            <Button Content="VALIDAR E ASSINAR" Padding="16,6" Margin="8,0,0,0" Command="{Binding ValidarEAssinarCommand}"
+                                    Style="{DynamicResource MahApps.Styles.Button.Square.Accent}" />
+                            <mah:ProgressRing Width="28" Height="28" Margin="12,0,0,0" IsActive="{Binding Processando}" />
+                        </StackPanel>
+
+                        <TextBlock Text="XML original" Style="{StaticResource Rotulo}" />
+                    </StackPanel>
+
+                    <TextBox Text="{Binding ConteudoXml, UpdateSourceTrigger=PropertyChanged}"
+                             AcceptsReturn="True" AcceptsTab="True" TextWrapping="NoWrap"
+                             FontFamily="Consolas" FontSize="12"
+                             VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
+                             VerticalContentAlignment="Top" />
+                </DockPanel>
+
+                <!-- Resultado -->
+                <DockPanel Grid.Column="2">
+                    <Border DockPanel.Dock="Top" Style="{StaticResource ResultadoStyle}"
+                            Visibility="{Binding Mensagem, Converter={StaticResource NullToVisibility}}">
+                        <StackPanel>
+                            <TextBlock Text="{Binding Mensagem}" FontWeight="SemiBold" TextWrapping="Wrap" />
+                            <TextBlock Margin="0,6,0,0" Visibility="{Binding Status, Converter={StaticResource NullToVisibility}}">
+                                <Run Text="Status: " /><Run Text="{Binding Status, Mode=OneWay}" FontWeight="SemiBold" />
+                            </TextBlock>
+                            <TextBlock Text="{Binding ChaveAcesso}" FontFamily="Consolas" Margin="0,4,0,0"
+                                       Visibility="{Binding ChaveAcesso, Converter={StaticResource NullToVisibility}}" />
+                            <TextBlock Text="{Binding Erros}" Foreground="#C62828" TextWrapping="Wrap" Margin="0,8,0,0"
+                                       Visibility="{Binding Erros, Converter={StaticResource NullToVisibility}}" />
+                        </StackPanel>
+                    </Border>
+
+                    <DockPanel DockPanel.Dock="Top" Margin="0,12,0,4">
+                        <Button DockPanel.Dock="Right" Content="SALVAR..." Command="{Binding SalvarXmlAssinadoCommand}" />
+                        <TextBlock Text="XML assinado" Style="{StaticResource Rotulo}" VerticalAlignment="Center" />
+                    </DockPanel>
+
+                    <TextBox Text="{Binding XmlAssinado, Mode=OneWay}" IsReadOnly="True"
+                             TextWrapping="Wrap" FontFamily="Consolas" FontSize="11"
+                             VerticalScrollBarVisibility="Auto" VerticalContentAlignment="Top" />
+                </DockPanel>
+            </Grid>
+        </TabItem>
+
+        <!-- ===================== ABA 3: HISTÓRICO / TIMELINE ===================== -->
+        <TabItem Header="Histórico" DataContext="{Binding Historico}">
+            <DockPanel Margin="16">
+                <DockPanel DockPanel.Dock="Top" Margin="0,0,0,12">
+                    <Button DockPanel.Dock="Right" Content="ATUALIZAR" Padding="16,6" Margin="8,0,0,0"
+                            Style="{DynamicResource MahApps.Styles.Button.Square.Accent}"
+                            Command="{Binding AtualizarCommand}" />
+                    <mah:ProgressRing DockPanel.Dock="Right" Width="28" Height="28" Margin="8,0,0,0" IsActive="{Binding Carregando}" />
+                    <TextBox Text="{Binding FiltroChave, UpdateSourceTrigger=PropertyChanged}" MaxLength="44" FontFamily="Consolas"
+                             mah:TextBoxHelper.Watermark="Filtrar pela chave de acesso (44 dígitos) — vazio = todos"
+                             mah:TextBoxHelper.ClearTextButton="True">
+                        <TextBox.InputBindings>
+                            <KeyBinding Key="Enter" Command="{Binding AtualizarCommand}" />
+                        </TextBox.InputBindings>
+                    </TextBox>
+                </DockPanel>
+
+                <TextBlock DockPanel.Dock="Bottom" Text="{Binding Mensagem}" Foreground="Gray" Margin="0,8,0,0" />
+
+                <!-- Detalhe do evento selecionado (diff JSONB e erro) -->
+                <Border DockPanel.Dock="Bottom" Margin="0,8,0,0" Padding="8" BorderBrush="#DDDDDD" BorderThickness="1"
+                        Visibility="{Binding EventoSelecionado, Converter={StaticResource NullToVisibility}}">
+                    <StackPanel>
+                        <TextBlock Text="Alterações (JSONB)" Style="{StaticResource Rotulo}" />
+                        <TextBox Text="{Binding EventoSelecionado.AlteracoesCampos, Mode=OneWay}" IsReadOnly="True"
+                                 TextWrapping="Wrap" FontFamily="Consolas" MaxHeight="90" VerticalScrollBarVisibility="Auto" />
+                        <TextBlock Text="{Binding EventoSelecionado.DetalheErro}" Foreground="#C62828" TextWrapping="Wrap" Margin="0,6,0,0"
+                                   Visibility="{Binding EventoSelecionado.DetalheErro, Converter={StaticResource NullToVisibility}}" />
+                    </StackPanel>
+                </Border>
+
+                <DataGrid ItemsSource="{Binding Eventos}" SelectedItem="{Binding EventoSelecionado}"
+                          AutoGenerateColumns="False" IsReadOnly="True" CanUserAddRows="False"
+                          GridLinesVisibility="Horizontal" HeadersVisibility="Column">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Quando" Binding="{Binding OcorridoEm, StringFormat='dd/MM/yyyy HH:mm:ss.fff'}" />
+                        <DataGridTextColumn Header="Chave de acesso" Binding="{Binding ChaveAcesso}" FontFamily="Consolas" />
+                        <DataGridTextColumn Header="Origem" Binding="{Binding OrigemEvento}" />
+                        <DataGridTextColumn Header="Etapa" Binding="{Binding Etapa}" />
+                        <DataGridTextColumn Header="De" Binding="{Binding StatusAnterior}" />
+                        <DataGridTextColumn Header="Para" Binding="{Binding StatusAtual}" />
+                        <DataGridCheckBoxColumn Header="Sucesso" Binding="{Binding Sucesso, Mode=OneWay}" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+        </TabItem>
+    </TabControl>
+</mah:MetroWindow>
