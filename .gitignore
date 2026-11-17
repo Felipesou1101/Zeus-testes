@@ -58,3 +58,14 @@ nunit-*.xml
 
 # FileContentIndex
 src/.vs/ZeusFiscalMonitor.slnx/FileContentIndex
+
+# Segredos locais da aplicação (senha do certificado A1 etc.)
+appsettings.Local.json
+
+# Certificados digitais
+*.pfx
+*.p12
+
+# Visual Studio
+.vs/
+*.user

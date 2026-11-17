@@ -1,12 +1,23 @@
 services:
   postgres:
     image: postgres:15.3
-    container_name: postgres
+    container_name: zeus-fiscal-postgres
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: {POSTGRES_USER}
-      POSTGRES_PASSWORD: {POSTGRES_PASSWORD}
-      POSTGRES_DB: {POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER:-zeus}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-zeus_dev_123}
+      POSTGRES_DB: ${POSTGRES_DB:-zeus_fiscal}
     ports:
-      - "{POSTGRES_PORT}:5432"
+      - "${POSTGRES_PORT:-5432}:5432"
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
+      # Scripts executados apenas na criação do volume (01_init.sql, depois 02_triggers.sql).
+      - ./banco:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  postgres-data:
