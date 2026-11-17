@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+  <infNFe versao="4.00" Id="NFe28261111222333000181650010000001241123456790">
+    <ide>
+      <cUF>28</cUF>
+      <cNF>12345679</cNF>
+      <natOp>VENDA AO CONSUMIDOR</natOp>
+      <mod>65</mod>
+      <serie>1</serie>
+      <nNF>124</nNF>
+      <dhEmi>2026-11-17T11:00:00-03:00</dhEmi>
+      <tpNF>1</tpNF>
+      <idDest>1</idDest>
+      <cMunFG>2800308</cMunFG>
+      <tpImp>4</tpImp>
+      <tpEmis>1</tpEmis>
+      <cDV>0</cDV>
+      <tpAmb>2</tpAmb>
+      <finNFe>1</finNFe>
+      <indFinal>1</indFinal>
+      <indPres>1</indPres>
+      <procEmi>0</procEmi>
+      <verProc>ZeusFiscal 1.0</verProc>
+    </ide>
+    <emit>
+      <CNPJ>11222333000181</CNPJ>
+      <xNome>NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xNome>
+      <enderEmit>
+        <xLgr>AV BEIRA MAR</xLgr>
+        <nro>1000</nro>
+        <xBairro>JARDINS</xBairro>
+        <cMun>2800308</cMun>
+        <xMun>ARACAJU</xMun>
+        <UF>SE</UF>
+        <CEP>49025040</CEP>
+      </enderEmit>
+      <IE>271234567</IE>
+      <CRT>1</CRT>
+    </emit>
+    <det nItem="1">
+      <prod>
+        <cProd>042</cProd>
+        <cEAN>SEM GTIN</cEAN>
+        <xProd>CAFE TORRADO 500G</xProd>
+        <NCM>09012100</NCM>
+        <CFOP>5102</CFOP>
+        <uCom>UN</uCom>
+        <qCom>1.0000</qCom>
+        <vUnCom>18.9000000000</vUnCom>
+        <vProd>18.90</vProd>
+        <cEANTrib>SEM GTIN</cEANTrib>
+        <uTrib>UN</uTrib>
+        <qTrib>1.0000</qTrib>
+        <vUnTrib>18.9000000000</vUnTrib>
+        <indTot>1</indTot>
+      </prod>
+      <imposto>
+        <ICMS>
+          <ICMSSN102>
+            <orig>0</orig>
+            <CSOSN>102</CSOSN>
+          </ICMSSN102>
+        </ICMS>
+      </imposto>
+    </det>
+    <total>
+      <ICMSTot>
+        <vBC>0.00</vBC>
+        <vICMS>0.00</vICMS>
+        <vProd>18.90</vProd>
+        <vNF>18.90</vNF>
+      </ICMSTot>
+    </total>
+    <transp>
+      <modFrete>9</modFrete>
+    </transp>
+    <pag>
+      <detPag>
+        <tPag>17</tPag>
+        <vPag>18.90</vPag>
+      </detPag>
+    </pag>
+  </infNFe>
+</NFe>

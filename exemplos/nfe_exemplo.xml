@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NFe xmlns="http://www.portalfiscal.inf.br/nfe">
+  <infNFe versao="4.00" Id="NFe28261111222333000181550010000001231123456782">
+    <ide>
+      <cUF>28</cUF>
+      <cNF>12345678</cNF>
+      <natOp>VENDA DE MERCADORIA</natOp>
+      <mod>55</mod>
+      <serie>1</serie>
+      <nNF>123</nNF>
+      <dhEmi>2026-11-17T10:30:00-03:00</dhEmi>
+      <tpNF>1</tpNF>
+      <idDest>1</idDest>
+      <cMunFG>2800308</cMunFG>
+      <tpImp>1</tpImp>
+      <tpEmis>1</tpEmis>
+      <cDV>2</cDV>
+      <tpAmb>2</tpAmb>
+      <finNFe>1</finNFe>
+      <indFinal>0</indFinal>
+      <indPres>1</indPres>
+      <procEmi>0</procEmi>
+      <verProc>ZeusFiscal 1.0</verProc>
+    </ide>
+    <emit>
+      <CNPJ>11222333000181</CNPJ>
+      <xNome>NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xNome>
+      <enderEmit>
+        <xLgr>AV BEIRA MAR</xLgr>
+        <nro>1000</nro>
+        <xBairro>JARDINS</xBairro>
+        <cMun>2800308</cMun>
+        <xMun>ARACAJU</xMun>
+        <UF>SE</UF>
+        <CEP>49025040</CEP>
+      </enderEmit>
+      <IE>271234567</IE>
+      <CRT>3</CRT>
+    </emit>
+    <dest>
+      <CNPJ>99999999000191</CNPJ>
+      <xNome>NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL</xNome>
+    </dest>
+    <det nItem="1">
+      <prod>
+        <cProd>001</cProd>
+        <cEAN>SEM GTIN</cEAN>
+        <xProd>TECLADO MECANICO USB</xProd>
+        <NCM>84716052</NCM>
+        <CFOP>5102</CFOP>
+        <uCom>UN</uCom>
+        <qCom>2.0000</qCom>
+        <vUnCom>150.0000000000</vUnCom>
+        <vProd>300.00</vProd>
+        <cEANTrib>SEM GTIN</cEANTrib>
+        <uTrib>UN</uTrib>
+        <qTrib>2.0000</qTrib>
+        <vUnTrib>150.0000000000</vUnTrib>
+        <indTot>1</indTot>
+      </prod>
+      <imposto>
+        <ICMS>
+          <ICMS00>
+            <orig>0</orig>
+            <CST>00</CST>
+            <modBC>3</modBC>
+            <vBC>300.00</vBC>
+            <pICMS>19.00</pICMS>
+            <vICMS>57.00</vICMS>
+          </ICMS00>
+        </ICMS>
+      </imposto>
+    </det>
+    <total>
+      <ICMSTot>
+        <vBC>300.00</vBC>
+        <vICMS>57.00</vICMS>
+        <vProd>300.00</vProd>
+        <vNF>300.00</vNF>
+      </ICMSTot>
+    </total>
+    <transp>
+      <modFrete>9</modFrete>
+    </transp>
+    <pag>
+      <detPag>
+        <tPag>01</tPag>
+        <vPag>300.00</vPag>
+      </detPag>
+    </pag>
+  </infNFe>
+</NFe>
