@@ -92,7 +92,7 @@ public partial class ValidadorAssinadorViewModel : ObservableObject
         CaminhoCertificado = caminho;
         SenhaCertificado = SenhaCertificadoTeste;
         Sucesso = null;
-        Mensagem = $"Certificado de teste gerado em {caminho} (senha: {SenhaCertificadoTeste}). Não é válido na SEFAZ.";
+        Mensagem = $"Certificado de teste gerado em {caminho}. Não é válido na SEFAZ.";
     }
 
     private bool PodeValidar() => !string.IsNullOrWhiteSpace(ConteudoXml);
